@@ -14,6 +14,14 @@ struct Patient {
 Patient patients[100];   // room for 100 patients
 int patientCount = 0;    // how many patients are actually stored
 
+int findPatientIndex(int id){
+    for(int i=0;i<patientCount;i++){
+        if(patients[i].id==id){
+            return i; 
+        } 
+    }
+    return -1 ;
+}
 void addPatient() {
     // Stop if the array is full
     if (patientCount >= 100) {
@@ -55,13 +63,30 @@ void viewPatients() {
     }
 }
 
+ void SearchPatients(){
+    int id; 
+    cout<<"Enter the patient ID to search :"; 
+    cin>>id; 
+    int pos=findPatientIndex(id); 
+    if(pos==-1){
+        cout<<"Patient not found!"<<endl; 
+    }
+    else {
+        cout<<patients[pos].id<<"|";
+        cout<<patients[pos].name<<"|";
+        cout<<patients[pos].age<<"|";
+        cout<<patients[pos].disease<<endl; 
+    }
+ }
+
 int main() {
     int choice;
     do {
-        cout << "\n1. Add Patient\n2. View Patients\n0. Exit\nChoice: ";
+        cout << "\n1. Add Patient\n2. View Patients\n3. SearchPatient\n0. Exit\nChoice: ";
         cin >> choice;
         if (choice == 1) addPatient();
         else if (choice == 2) viewPatients();
+        else if(choice==3) SearchPatients(); 
     } while (choice != 0);
     return 0;
 }

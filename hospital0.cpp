@@ -33,7 +33,10 @@ void addPatient() {
     cout << "Enter ID: ";
     cin >> patients[patientCount].id;
     cin.ignore();   // remove leftover Enter before getline
-
+    if(findPatientIndex(patients[patientCount].id)!=-1){
+        cout<<"ID already exists.\n";
+        return ; 
+    }
     cout << "Enter name: ";
     getline(cin, patients[patientCount].name);
 
@@ -78,15 +81,32 @@ void viewPatients() {
         cout<<patients[pos].disease<<endl; 
     }
  }
+ void deletePatient(){
+    int id; 
+    cout<<"Enter the ID to delete"<<endl; 
+    cin>>id; 
+    int pos=findPatientIndex(id); 
+    if(pos==-1){
+        cout<<"Patient not found"<<endl; 
+    }
+    else{
+        for(int i=pos;i<=patientCount-2;i++){
+            patients[i]=patients[i+1];  
+        }
+        patientCount--;
+        cout<<"Patient deleted!"<<endl; 
+    }
+ }
 
 int main() {
     int choice;
     do {
-        cout << "\n1. Add Patient\n2. View Patients\n3. SearchPatient\n0. Exit\nChoice: ";
+        cout << "\n1. Add Patient\n2. View Patients\n3. SearchPatient\n4. DeletePatient\n0. Exit\nChoice: ";
         cin >> choice;
         if (choice == 1) addPatient();
         else if (choice == 2) viewPatients();
-        else if(choice==3) SearchPatients(); 
+        else if(choice==3) SearchPatients();
+        else if(choice==4) deletePatient(); 
     } while (choice != 0);
     return 0;
 }
